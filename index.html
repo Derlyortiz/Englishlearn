@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold">English Learning</a>
+            <div class="space-x-4">
+                <a href="#" onclick="showContactModal()" class="hover:text-blue-200">Contact</a>
+                <a href="#" onclick="showAboutModal()" class="hover:text-blue-200">About</a>
+                <a href="#" onclick="showTerms()" class="hover:text-blue-200">Terms of Service</a>
+                <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition duration-300">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-gray-800">Contact Us</h2>
+                <button onclick="hideContactModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <form class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+                        <input type="text" id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-sm font-medium text-gray-700">Subject</label>
+                        <select id="subject" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                            <option>General Inquiry</option>
+                            <option>Technical Support</option>
+                            <option>Feedback</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                        <textarea id="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input id="privacy" name="privacy" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                        <label for="privacy" class="ml-2 block text-sm text-gray-700">
+                            I agree to the <a href="/privacy" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="sticky bottom-0 bg-white p-4 border-t flex justify-between items-center">
+                <div class="text-sm text-gray-500">
+                    <p>Typically respond within 24 hours</p>
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    Send Message
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white p-4 border-b flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-gray-800">About English Learning Hub</h2>
+                <button onclick="hideAboutModal()" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="flex flex-col md:flex-row items-center mb-8">
+                    <div class="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-3">Our Mission</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            We're dedicated to making English learning accessible, engaging, and effective for everyone. 
+                            Through interactive grammar exercises, vocabulary builders, and educational games.
+                        </p>
+                    </div>
+                    <div class="md:w-1/2">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" 
+                            alt="Students learning" 
+                            class="rounded-lg shadow-sm w-full h-auto">
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Why Choose Us?</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="text-blue-500 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-medium mb-1">Quality Content</h4>
+                        <p class="text-sm text-gray-600">Created by certified English teachers</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="text-blue-500 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-medium mb-1">Interactive Learning</h4>
+                        <p class="text-sm text-gray-600">Engaging exercises and games</p>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <div class="text-blue-500 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-medium mb-1">Free Access</h4>
+                        <p class="text-sm text-gray-600">No hidden fees or subscriptions</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Creator</h3>
+                    <div class="flex items-center">
+                        <div>
+                            <h4 class="font-medium">Derly Ortiz Ubiera</h4>
+                            <p class="text-blue-500 text-sm">Founder & English Educator</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky bottom-0 bg-white p-4 border-t flex justify-end">
+                <button onclick="hideAboutModal()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold text-gray-800">Terms of Service</h2>
+                    <button onclick="hideTerms()" class="text-gray-500 hover:text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="prose prose-sm sm:prose lg:prose-lg xl:prose-xl mx-auto">
+                    <p class="text-gray-600 mb-2"><strong>Last Updated:</strong> 04/01/2025</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4">1. Acceptance of Terms</h3>
+                    <p class="mb-4">By accessing and using English Learning (hereinafter, "the Site"), you agree to comply with these Terms of Service and our Privacy Policy. If you do not agree, please refrain from using the Site.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4">2. Use of the Site</h3>
+                    <h4 class="font-semibold mt-2">2.1 Requirements</h4>
+                    <ul class="list-disc pl-5 mb-2">
+                        <li>You must be at least 13 years old or have parental supervision.</li>
+                        <li>Prohibited to use the Site for illegal or harmful purposes.</li>
+                    </ul>
+                    
+                    <h4 class="font-semibold mt-2">2.2 Content</h4>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li>All materials (grammar, vocabulary, games) are for personal educational use only.</li>
+                        <li>Do not copy, distribute, or modify content without authorization.</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mt-4">3. User Accounts</h3>
+                    <h4 class="font-semibold mt-2">3.1 Registration</h4>
+                    <ul class="list-disc pl-5 mb-2">
+                        <li>You must provide accurate and current information.</li>
+                        <li>You are responsible for maintaining account confidentiality.</li>
+                    </ul>
+                    
+                    <h4 class="font-semibold mt-2">3.2 Suspension</h4>
+                    <p class="mb-2">We reserve the right to suspend accounts that:</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li>Violate these terms.</li>
+                        <li>Post offensive content or spam.</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mt-4">4. Limitation of Liability</h3>
+                    <p class="mb-2">The Site does not guarantee absolute accuracy in educational materials.</p>
+                    <p class="mb-4">We are not responsible for:</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li>Damages resulting from Site usage.</li>
+                        <li>Content on external links (e.g., games).</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mt-4">5. Intellectual Property</h3>
+                    <p class="mb-4">All content (texts, designs, logos) is property of English Learning or its licensors. Commercial use is prohibited without written permission.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4">6. Modifications</h3>
+                    <p class="mb-4">We may update these terms occasionally. Changes will be notified through:</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li>A notice on the Site.</li>
+                        <li>Your continued use implies acceptance.</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mt-4">7. Governing Law</h3>
+                    <p class="mb-4">These terms are governed by the laws of Dominican Republic. Any disputes shall be resolved in the competent courts of Santo Domingo.</p>
+                    
+                    <h3 class="text-xl font-semibold mt-4">8. Contact</h3>
+                    <p class="mb-2">For questions about these terms:</p>
+                    <ul class="list-disc pl-5 mb-4">
+                        <li><strong>Email:</strong> ortizubieraderly@gmail.com</li>
+                        <li><strong>Address:</strong> 21000-DR-SPM</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold mt-4">Appendix: External Game Links</h3>
+                    <p class="mb-4">The "Play Now" button redirects to Games to Learn English, an external site. We do not control its content or policies.</p>
+                </div>
+                
+                <div class="mt-6 flex justify-end">
+                    <button onclick="hideTerms()" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto mt-8 p-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Grammar Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-bold mb-4">Grammar</h2>
+                <p class="mb-4">Practice English grammar with interactive exercises</p>
+                <button 
+                    onclick="toggleText('grammar-text')" 
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Start Learning
+                </button>
+                <div id="grammar-text" class="hidden mt-3 p-4 bg-gray-50 border border-blue-100 rounded-lg">
+                    <p>📌 <strong>Grammar content:</strong> </p>
+                    <!-- Nouns -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Nouns</h3>
+                        <p>Nouns are people, places, or things. They tell us what we are talking about. The words <em>cat</em>, <em>Jack</em>, <em>rock</em>, <em>Africa</em>, & <em>it</em> are nouns.</p>
+                    </div>
+
+                    <!-- Adjectives -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Adjectives</h3>
+                        <p>Adjectives modify, or describe, nouns. The words <em>tall</em>, <em>beautiful</em>, <em>irresponsible</em>, & <em>boring</em> are adjectives.</p>
+                    </div>
+
+                    <!-- Adverbs -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Adverbs</h3>
+                        <p>Adverbs modify adjectives, verbs, or other adverbs. They tell us how, when, and where things happen. They express quantity, intensity, frequency, and opinions.</p>
+                    </div>
+
+                    <!-- Determiners -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Determiners</h3>
+                        <p>Articles, quantifiers, and other determiners modify nouns. They resemble adjectives in that way. Determiners help us say what we are talking about.</p>
+                    </div>
+
+                    <!-- Verbs & verb tenses -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Verbs & Verb Tenses</h3>
+                        <p>Verbs are action words. They tell us what is happening and when (past, present, future). Verbs can also express possibilities and conditions.</p>
+                    </div>
+
+                    <!-- Speech -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Speech</h3>
+                        <p>When we report what someone says, we can cite the person directly or indirectly. Indirect speech rules are an important area of grammar.</p>
+                    </div>
+
+                    <!-- Punctuation -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Punctuation</h3>
+                        <p>Punctuation is not part of oral grammar, but it is essential to master in written English.</p>
+                    </div>
+
+                    <!-- Relative clauses -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Relative Clauses</h3>
+                        <p>We use relative clauses in English to create more complex and more precise sentences.</p>
+                    </div>
+
+                    <!-- Grammar test -->
+                    <div class="mb-6 pl-4 border-l-4 border-blue-200">
+                        <h3 class="font-semibold text-lg mb-2">Grammar Test</h3>
+                        <p>Test your English grammar skills in context, both listening and reading skills included.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Vocabulary Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-bold mb-4">Vocabulary</h2>
+                <p class="mb-4">Expand your English vocabulary through various activities</p>
+                <button 
+                    onclick="toggleText('vocabulary-text')" 
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Start Learning
+                </button>
+                <div id="vocabulary-text" class="hidden mt-3 p-4 bg-gray-50 border border-blue-100 rounded-lg">
+                    <p class="mb-4">📖 <strong>Vocabulary content:</strong> Common English words by letter:</p>
+                    
+                    <!-- A -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">A</h3>
+                        <ol class="list-decimal pl-5 space-y-1">
+                            <li>Apple</li>
+                            <li>Animal</li>
+                            <li>Adventure</li>
+                            <li>Amazing</li>
+                            <li>Always</li>
+                            <li>Art</li>
+                            <li>Answer</li>
+                            <li>Audience</li>
+                            <li>Airplane</li>
+                            <li>Artist</li>
+                            <li>Ancient</li>
+                            <li>Angle</li>
+                            <li>Actor</li>
+                            <li>Afternoon</li>
+                            <li>Avenue</li>
+                        </ol>
+                    </div>
+            
+                    <!-- B -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">B</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="16">
+                            <li>Book</li>
+                            <li>Ball</li>
+                            <li>Beautiful</li>
+                            <li>Busy</li>
+                            <li>Brother</li>
+                            <li>Bridge</li>
+                            <li>Basket</li>
+                            <li>Bed</li>
+                            <li>Baby</li>
+                            <li>Balance</li>
+                            <li>Beach</li>
+                            <li>Believe</li>
+                            <li>Brave</li>
+                            <li>Bright</li>
+                            <li>Bicycle</li>
+                        </ol>
+                    </div>
+            
+                    <!-- C -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">C</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="31">
+                            <li>Cat</li>
+                            <li>Car</li>
+                            <li>Circle</li>
+                            <li>Cloud</li>
+                            <li>Chair</li>
+                            <li>Candle</li>
+                            <li>Camera</li>
+                            <li>Coffee</li>
+                            <li>Class</li>
+                            <li>Culture</li>
+                            <li>Calendar</li>
+                            <li>Calm</li>
+                            <li>Card</li>
+                            <li>Close</li>
+                            <li>Cloudy</li>
+                        </ol>
+                    </div>
+            
+                    <!-- D -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">D</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="46">
+                            <li>Dog</li>
+                            <li>Door</li>
+                            <li>Dance</li>
+                            <li>Day</li>
+                            <li>Doctor</li>
+                            <li>Delicious</li>
+                            <li>Danger</li>
+                            <li>Drive</li>
+                            <li>Dream</li>
+                            <li>Dark</li>
+                            <li>Decision</li>
+                            <li>Difference</li>
+                            <li>Dinner</li>
+                            <li>Dust</li>
+                            <li>Distance</li>
+                        </ol>
+                    </div>
+            
+                    <!-- E -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">E</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="61">
+                            <li>Elephant</li>
+                            <li>Energy</li>
+                            <li>Eat</li>
+                            <li>Envelope</li>
+                            <li>Education</li>
+                            <li>Empty</li>
+                            <li>Evening</li>
+                            <li>Easy</li>
+                            <li>Environment</li>
+                            <li>Example</li>
+                            <li>Exercise</li>
+                            <li>Enter</li>
+                            <li>Event</li>
+                            <li>Equal</li>
+                            <li>Experience</li>
+                        </ol>
+                    </div>
+            
+                    <!-- F -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">F</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="76">
+                            <li>Friend</li>
+                            <li>Food</li>
+                            <li>Flower</li>
+                            <li>Fun</li>
+                            <li>Fast</li>
+                            <li>Family</li>
+                            <li>Farm</li>
+                            <li>Future</li>
+                            <li>Forest</li>
+                            <li>Floor</li>
+                            <li>Figure</li>
+                            <li>Flight</li>
+                            <li>Freedom</li>
+                            <li>Finish</li>
+                            <li>Famous</li>
+                        </ol>
+                    </div>
+            
+                    <!-- G -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">G</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="91">
+                            <li>Game</li>
+                            <li>Girl</li>
+                            <li>Good</li>
+                            <li>Great</li>
+                            <li>Garden</li>
+                            <li>Gift</li>
+                            <li>Gold</li>
+                            <li>Goal</li>
+                            <li>Grand</li>
+                            <li>Giant</li>
+                            <li>Gentle</li>
+                            <li>Glass</li>
+                            <li>Group</li>
+                            <li>Gather</li>
+                            <li>Green</li>
+                        </ol>
+                    </div>
+
+                    <!-- H -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">H</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="106">
+                            <li>House</li>
+                            <li>Happy</li>
+                            <li>Help</li>
+                            <li>Hope</li>
+                            <li>Hat</li>
+                            <li>Holiday</li>
+                            <li>Heart</li>
+                            <li>Hero</li>
+                            <li>Heavy</li>
+                            <li>Hug</li>
+                            <li>Hand</li>
+                            <li>Hill</li>
+                            <li>Human</li>
+                            <li>History</li>
+                            <li>Health</li>
+                        </ol>
+                    </div>
+
+                    <!-- I -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">I</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="121">
+                            <li>Ice</li>
+                            <li>Island</li>
+                            <li>Important</li>
+                            <li>Imagine</li>
+                            <li>Idea</li>
+                            <li>Interest</li>
+                            <li>Inside</li>
+                            <li>Information</li>
+                            <li>Invite</li>
+                            <li>Increase</li>
+                            <li>Individual</li>
+                            <li>Internet</li>
+                            <li>Involve</li>
+                            <li>Issue</li>
+                            <li>Injury</li>
+                        </ol>
+                    </div>
+
+                    <!-- J -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">J</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="136">
+                            <li>Jump</li>
+                            <li>Joke</li>
+                            <li>Juice</li>
+                            <li>Job</li>
+                            <li>Jacket</li>
+                            <li>Journey</li>
+                            <li>Juggle</li>
+                            <li>Joy</li>
+                            <li>Jelly</li>
+                            <li>Junior</li>
+                            <li>Join</li>
+                            <li>Judgment</li>
+                            <li>Jumping</li>
+                            <li>Justice</li>
+                            <li>Jogging</li>
+                        </ol>
+                    </div>
+
+                    <!-- K -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">K</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="151">
+                            <li>Kite</li>
+                            <li>King</li>
+                            <li>Kitchen</li>
+                            <li>Knowledge</li>
+                            <li>Key</li>
+                            <li>Kiss</li>
+                            <li>Kind</li>
+                            <li>Knock</li>
+                            <li>Kid</li>
+                            <li>Keep</li>
+                            <li>Kindness</li>
+                            <li>Knee</li>
+                            <li>Kingdom</li>
+                            <li>Knowledgeable</li>
+                            <li>Known</li>
+                        </ol>
+                    </div>
+
+                    <!-- L -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">L</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="166">
+                            <li>Love</li>
+                            <li>Light</li>
+                            <li>Language</li>
+                            <li>Life</li>
+                            <li>Laugh</li>
+                            <li>Lemon</li>
+                            <li>Lion</li>
+                            <li>Listen</li>
+                            <li>Leader</li>
+                            <li>Lesson</li>
+                            <li>Large</li>
+                            <li>Lovely</li>
+                            <li>Lucky</li>
+                            <li>Lunch</li>
+                            <li>Library</li>
+                        </ol>
+                    </div>
+
+                    <!-- M -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">M</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="181">
+                            <li>Moon</li>
+                            <li>Mountain</li>
+                            <li>Money</li>
+                            <li>Music</li>
+                            <li>Move</li>
+                            <li>Memory</li>
+                            <li>Mask</li>
+                            <li>Market</li>
+                            <li>Minute</li>
+                            <li>Mother</li>
+                            <li>Machine</li>
+                            <li>Moment</li>
+                            <li>Month</li>
+                            <li>Mobile</li>
+                        </ol>
+                    </div>
+
+                    <!-- N -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">N</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="195">
+                            <li>Night</li>
+                            <li>Name</li>
+                            <li>Nice</li>
+                            <li>Neighbor</li>
+                            <li>Nature</li>
+                            <li>Number</li>
+                            <li>Notice</li>
+                            <li>Normal</li>
+                            <li>New</li>
+                            <li>Nurse</li>
+                            <li>Near</li>
+                            <li>Never</li>
+                            <li>Noise</li>
+                            <li>Necessary</li>
+                            <li>Nation</li>
+                        </ol>
+                    </div>
+
+                    <!-- O -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">O</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="210">
+                            <li>Ocean</li>
+                            <li>Open</li>
+                            <li>Orange</li>
+                            <li>Old</li>
+                            <li>Office</li>
+                            <li>Offer</li>
+                            <li>Object</li>
+                            <li>Opportunity</li>
+                            <li>Over</li>
+                            <li>Outside</li>
+                            <li>Online</li>
+                            <li>Organize</li>
+                            <li>Owner</li>
+                            <li>Opinion</li>
+                            <li>Outstanding</li>
+                        </ol>
+                    </div>
+
+                    <!-- P -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">P</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="225">
+                            <li>Pen</li>
+                            <li>Person</li>
+                            <li>Play</li>
+                            <li>Plant</li>
+                            <li>Phone</li>
+                            <li>Picture</li>
+                            <li>Peace</li>
+                            <li>Party</li>
+                            <li>Price</li>
+                            <li>Power</li>
+                            <li>Pizza</li>
+                            <li>Problem</li>
+                            <li>Product</li>
+                            <li>Present</li>
+                            <li>Park</li>
+                        </ol>
+                    </div>
+
+                    <!-- Q -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">Q</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="240">
+                            <li>Queen</li>
+                            <li>Quick</li>
+                            <li>Question</li>
+                            <li>Quiet</li>
+                            <li>Quality</li>
+                            <li>Quarter</li>
+                            <li>Quotation</li>
+                            <li>Quilt</li>
+                            <li>Quantity</li>
+                            <li>Quit</li>
+                            <li>Quote</li>
+                            <li>Quiz</li>
+                            <li>Quickness</li>
+                            <li>Quake</li>
+                            <li>Quirky</li>
+                        </ol>
+                    </div>
+
+                    <!-- R -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">R</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="255">
+                            <li>Rain</li>
+                            <li>Run</li>
+                            <li>Red</li>
+                            <li>Room</li>
+                            <li>Rock</li>
+                            <li>Rainbow</li>
+                            <li>Rest</li>
+                            <li>Right</li>
+                            <li>Road</li>
+                            <li>River</li>
+                            <li>Reach</li>
+                            <li>Radio</li>
+                            <li>Real</li>
+                            <li>Respect</li>
+                            <li>Reason</li>
+                        </ol>
+                    </div>
+
+                    <!-- S -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">S</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="270">
+                            <li>Sun</li>
+                            <li>School</li>
+                            <li>Smile</li>
+                            <li>Salt</li>
+                            <li>Strong</li>
+                            <li>Song</li>
+                            <li>Street</li>
+                            <li>Share</li>
+                            <li>Stop</li>
+                            <li>Sweet</li>
+                            <li>Sea</li>
+                            <li>Sister</li>
+                            <li>Student</li>
+                            <li>Sound</li>
+                            <li>Story</li>
+                        </ol>
+                    </div>
+
+                    <!-- T -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">T</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="285">
+                            <li>Table</li>
+                            <li>Time</li>
+                            <li>Tree</li>
+                            <li>Toy</li>
+                            <li>Talk</li>
+                            <li>Travel</li>
+                            <li>Team</li>
+                            <li>Teacher</li>
+                            <li>Test</li>
+                            <li>Television</li>
+                            <li>Town</li>
+                            <li>Tiger</li>
+                            <li>Thank</li>
+                            <li>Thing</li>
+                            <li>Talent</li>
+                        </ol>
+                    </div>
+
+                    <!-- U -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">U</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="300">
+                            <li>Umbrella</li>
+                            <li>Under</li>
+                            <li>Uniform</li>
+                            <li>Unique</li>
+                            <li>Use</li>
+                            <li>Understand</li>
+                            <li>Universe</li>
+                            <li>Up</li>
+                            <li>Urban</li>
+                            <li>Usual</li>
+                            <li>Unhappy</li>
+                            <li>Ultimate</li>
+                            <li>Unclear</li>
+                            <li>Urgent</li>
+                            <li>Unseen</li>
+                        </ol>
+                    </div>
+
+                    <!-- V -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">V</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="315">
+                            <li>Van</li>
+                            <li>Video</li>
+                            <li>Vacation</li>
+                            <li>Voice</li>
+                            <li>Very</li>
+                            <li>Victory</li>
+                            <li>Visit</li>
+                            <li>Village</li>
+                            <li>Value</li>
+                            <li>Vowel</li>
+                            <li>Vanish</li>
+                            <li>Valid</li>
+                            <li>Vegetable</li>
+                            <li>Visual</li>
+                            <li>View</li>
+                        </ol>
+                    </div>
+
+                    <!-- W -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">W</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="330">
+                            <li>Water</li>
+                            <li>World</li>
+                            <li>Window</li>
+                            <li>Walk</li>
+                            <li>Work</li>
+                            <li>Watch</li>
+                            <li>Weather</li>
+                            <li>White</li>
+                            <li>Wonderful</li>
+                            <li>Wind</li>
+                            <li>Wild</li>
+                            <li>Wait</li>
+                            <li>Weight</li>
+                            <li>Week</li>
+                            <li>Welcome</li>
+                        </ol>
+                    </div>
+
+                    <!-- X -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">X</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="345">
+                            <li>X-ray</li>
+                            <li>Xenon</li>
+                            <li>Xerox</li>
+                            <li>Xylophone</li>
+                            <li>Xenophobia</li>
+                            <li>Xander</li>
+                            <li>X-factor</li>
+                            <li>Xtreme</li>
+                            <li>Xylograph</li>
+                            <li>Xylitol</li>
+                            <li>Xeno</li>
+                            <li>Xanadu</li>
+                            <li>Xenoform</li>
+                            <li>X-axis</li>
+                            <li>X-chromosome</li>
+                        </ol>
+                    </div>
+
+                    <!-- Y -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">Y</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="360">
+                            <li>Yellow</li>
+                            <li>Year</li>
+                            <li>Yes</li>
+                            <li>Young</li>
+                            <li>Yard</li>
+                            <li>Yesterday</li>
+                            <li>Yell</li>
+                            <li>Yolk</li>
+                            <li>Youth</li>
+                            <li>Yawn</li>
+                            <li>Your</li>
+                            <li>Yoga</li>
+                            <li>Yummy</li>
+                            <li>Yardstick</li>
+                            <li>Yield</li>
+                        </ol>
+                    </div>
+
+                    <!-- Z -->
+                    <div class="mb-6">
+                        <h3 class="font-bold text-lg mb-2 text-blue-600">Z</h3>
+                        <ol class="list-decimal pl-5 space-y-1" start="375">
+                            <li>Zebra</li>
+                            <li>Zero</li>
+                            <li>Zoo</li>
+                            <li>Zone</li>
+                            <li>Zoom</li>
+                            <li>Zigzag</li>
+                            <li>Zipper</li>
+                            <li>Zeal</li>
+                            <li>Zinc</li>
+                            <li>Zombie</li>
+                            <li>Zest</li>
+                            <li>Zenith</li>
+                            <li>Zonal</li>
+                            <li>Zephyr</li>
+                            <li>Zany</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Games Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-bold mb-4">Games</h2>
+                <p class="mb-4">Learn English while having fun with interactive games</p>
+                <a 
+                    href="https://www.gamestolearnenglish.com/" 
+                    target="_blank" 
+                    class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                    Play Now
+                </a>
+                <div id="games-text" class="hidden mt-3 p-4 bg-gray-50 border border-blue-100 rounded-lg">
+                    <p>🎮 <strong>Games available:</strong> Word matching, quizzes, and puzzles.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white p-4 mt-8 border-t">
+        <div class="container mx-auto flex justify-between">
+            <p class="text-gray-700">Author: Derly Ortiz Ubiera</p>
+            <p class="text-gray-700">©All rights reserved 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        const user = localStorage.getItem('loggedInUser');
+        if (!user) {
+            window.location.href = 'login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('loggedInUser');
+            window.location.href = 'login.html';
+        }
+
+        function toggleText(elementId) {
+            const element = document.getElementById(elementId);
+            element.classList.toggle('hidden');
+        }
+
+        function showContactModal() {
+            document.getElementById('contact-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('contact-modal').addEventListener('click', function(e) {
+            if (e.target === this) hideContactModal();
+        });
+
+        function showAboutModal() {
+            document.getElementById('about-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideAboutModal() {
+            document.getElementById('about-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        document.getElementById('about-modal').addEventListener('click', function(e) {
+            if (e.target === this) hideAboutModal();
+        });
+
+        function showTerms() {
+            document.getElementById('terms-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function hideTerms() {
+            document.getElementById('terms-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+        
+        document.getElementById('terms-modal').addEventListener('click', function(e) {
+            if (e.target === this) hideTerms();
+        });
+    </script>
+</body>
+</html>
