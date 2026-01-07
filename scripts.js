@@ -5,7 +5,7 @@ document.getElementById('loginForm')?.addEventListener('submit', function(e) {
     const password = document.getElementById('password').value;
 
     // Validación simple (puedes reemplazar por lógica más compleja si quieres)
-    if (username === 'admin' && password === 'admin123') {
+    if (username === '${USERNAME_ENGLISHLEARN}' && password === '${PASSWORD_ENGLISHLEARN}') {
         localStorage.setItem('loggedInUser', username); // Guarda "sesión"
         window.location.href = 'index.html';
     } else {
@@ -61,3 +61,4 @@ document.getElementById('registerForm')?.addEventListener('submit', function(e) 
         alert('Las contraseñas no coinciden');
     }
 });
+
